@@ -40,6 +40,3 @@
     -fx-font-weight: bold;
 }
 /*พื้นหลัง*/
-.root {
-    -fx-background-color: linear-gradient(to bottom, #8e8e8b, #ececb2);
-}
