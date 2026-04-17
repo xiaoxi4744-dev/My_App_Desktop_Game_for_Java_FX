@@ -1,0 +1,15 @@
+.env
+# JavaFX SDK (สำคัญ)
+GUIFX/
+
+# หรือถ้าเฉพาะ
+*.dylib
+*.jar
+
+# OS
+.DS_Store
+
+# build
+*.class
+bin/
+out/

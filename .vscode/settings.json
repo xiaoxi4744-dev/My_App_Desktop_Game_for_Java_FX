@@ -1,0 +1,10 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "/Users/xiaoxi/Downloads/javafx-sdk-26/lib/**/*.jar",
+        "/Users/xiaoxi/Downloads/mysql-connector-j-9.6.0/mysql-connector-j-9.6.0.jar",
+        "/Users/xiaoxi/Downloads/ItemJAVA/javafx-sdk-26/lib/**/*.jar",
+        "/Users/xiaoxi/Downloads/ItemJAVA/mysql-connector-j-9.6.0/mysql-connector-j-9.6.0.jar",
+        "/Users/xiaoxi/Downloads/ItemJAVA/lib/dotenv.jar"
+    ]
+}

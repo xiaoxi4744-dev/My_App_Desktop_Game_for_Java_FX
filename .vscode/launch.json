@@ -1,0 +1,12 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Appscore",
+      "request": "launch",
+      "mainClass": "Appscore",
+      "vmArgs": "--module-path /Users/xiaoxi/Downloads/JAVAAPP/GUIFX/javafx-sdk-26/lib --add-modules javafx.controls,javafx.fxml"
+    }
+  ]
+}
