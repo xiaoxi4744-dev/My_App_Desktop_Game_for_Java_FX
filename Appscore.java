@@ -7,6 +7,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.geometry.Pos;
 import javafx.scene.text.Font;
 import javafx.scene.layout.StackPane;
@@ -49,8 +51,9 @@ public class Appscore extends Application {
 //GUI1 ############################################################################################################################################################################
     @Override
         public void start(Stage stage)throws Exception{
+
         this.stage = stage;
-        StackPane root = new StackPane();
+        StackPane root1Pane = new StackPane();
 
         Label title = new Label("Login");
         title.setFont(new Font("Arial",22));
@@ -66,7 +69,18 @@ public class Appscore extends Application {
         Button bt = new Button("Login");
         bt.getStyleClass().add("login-btn");
         bt.setOnAction(e ->{
-            showmain();
+            if(checkLoingAdmin(user.getText(),pass.getText())){
+                System.out.println("Login Success");
+                showmain();
+            }else{
+                System.out.println("Login Field");
+                //แจ้งเตือน
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("ERROR");
+                alert.setHeaderText(null);
+                alert.setContentText("Username หรือ Password ผิด!");
+                alert.showAndWait();
+            }
         });
 
         Button bt1 = new Button("Regiter");
@@ -95,9 +109,11 @@ public class Appscore extends Application {
 
         BT.getChildren().addAll(bt,bt1);
         window.getChildren().addAll(title,user,pass,BT);
-        root.getChildren().addAll(re, window);
 
-        Scene scene1 = new Scene(root,1000,600);
+        root1Pane.getChildren().addAll(re, window);
+        root1Pane.getStyleClass().add("bg-scene1");//พื้นหลัง
+
+        Scene scene1 = new Scene(root1Pane,1000,600);
 
         //CSS
         scene1.getStylesheets().add(getClass().getResource("Sy.css").toExternalForm());
@@ -257,11 +273,17 @@ public class Appscore extends Application {
 
 //GUI3 ############################################################################################################################################################################
     public void StudenScene(){
-        
+
+        StackPane root = new StackPane();
+
         Label lb = new Label("StudenScene");
 
-        Scene scene3 = new Scene(lb,1000,600);
+        root.getChildren().add(lb);
+        root.getStyleClass().add("bg-scene3");
 
+
+
+        Scene scene3 = new Scene(root,1000,600);
         scene3.getStylesheets().add(getClass().getResource("Sy.css").toExternalForm());
 
         stage.setTitle("Studen");
@@ -402,6 +424,26 @@ public void DELETEstudens(String id){
     );
     }
     //checkLoing
-    
+    public boolean checkLoingAdmin(String username,String passwaord){
+        try {
+            Connection conn = connect();
 
+            String sql = "SELECT * FROM admin WHERE username=? AND password=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setString(1,username);
+            ps.setString(2,passwaord);
+
+            ResultSet rs = ps.executeQuery();
+
+            if(rs.next()){
+                conn.close();
+                return true;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
