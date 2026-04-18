@@ -13,3 +13,4 @@ GUIFX/
 *.class
 bin/
 out/
+.gitignore/

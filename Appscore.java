@@ -60,11 +60,11 @@ public class Appscore extends Application {
 
         TextField user = new TextField();
         user.setPromptText("Username");
-        user.getStyleClass().add("User-Textfield");
+        user.getStyleClass().add("Login-Field");
 
         PasswordField pass = new PasswordField();
         pass.setPromptText("Password");
-        pass.getStyleClass().add("Pass-Field");
+        pass.getStyleClass().add("Login-Field");
 
         Button bt = new Button("Login");
         bt.getStyleClass().add("login-btn");

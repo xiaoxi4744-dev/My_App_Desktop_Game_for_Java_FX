@@ -1,11 +1,9 @@
 /*GUI1*/
-.User-Textfield{
-    -fx-background-radius: 10;
-    -fx-border-radius: 10;
-}
-.Pass-Field{
-    -fx-background-radius: 10;
-    -fx-border-radius: 10;
+.Login-Field{
+    -fx-font-size: 14px;
+    -fx-font-family: "Arial";
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
 }
 .login-btn{
     -fx-effect: dropshadow(gaussian, black, 5, 0.3, 0, 0);
