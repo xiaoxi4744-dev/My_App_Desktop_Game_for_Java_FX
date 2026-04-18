@@ -19,26 +19,31 @@ import javafx.beans.property.*;
 import javafx.collections.*;
 import java.sql.*;
 
+import javax.swing.Action;
+
 //OOP
 class Students {
     private StringProperty id;
-    private StringProperty fname;
-    private StringProperty lname;
-    private StringProperty age;
-    private StringProperty score;
+    private StringProperty f_name;
+    private StringProperty l_name;
+    private StringProperty email;
+    private StringProperty birthday;
+    private StringProperty lv;
 
-    public Students(String id, String fname, String lname, String age, String score){
+    public Students(String id, String f_name, String l_name, String email, String birthday,String lv){
         this.id = new SimpleStringProperty(id);
-        this.fname = new SimpleStringProperty(fname);
-        this.lname = new SimpleStringProperty(lname);
-        this.age = new SimpleStringProperty(age);
-        this.score = new SimpleStringProperty(score);
+        this.f_name = new SimpleStringProperty(f_name);
+        this.l_name = new SimpleStringProperty(l_name);
+        this.email = new SimpleStringProperty(email);
+        this.birthday = new SimpleStringProperty(birthday);
+        this.lv = new SimpleStringProperty(lv);
     }
     public StringProperty idProperty() {return id;} //ส่งค่าออกไป
-    public StringProperty fnameProperty() {return fname;}
-    public StringProperty lnameProperty() {return lname;}
-    public StringProperty ageProperty() {return age;}
-    public StringProperty scoreProperty() {return score;}
+    public StringProperty f_nameProperty() {return f_name;}
+    public StringProperty l_nameProperty() {return l_name;}
+    public StringProperty emailProperty() {return email;}
+    public StringProperty birthdayProperty() {return birthday;}
+    public StringProperty lvProperty() {return lv;}
 }
 
 public class Appscore extends Application {
@@ -87,7 +92,7 @@ public class Appscore extends Application {
         bt1.getStyleClass().add("login-btn");
         bt1.setOnAction( e ->{
             System.out.println("สมัครแล้ว!");
-            StudenScene();
+            Regiter();
         });
 
         Rectangle re = new Rectangle();
@@ -154,28 +159,32 @@ public class Appscore extends Application {
         lnameField.setPromptText("Last Name");
         lnameField.getStyleClass().add("User-Textfield");
 
-        TextField Age = new TextField();
-        Age.setPromptText("Age");
-        Age.getStyleClass().add("ID");
+        TextField BD = new TextField();
+        BD.setPromptText("Birthday");
+        BD.getStyleClass().add("User-Textfield");
 
-        TextField scre = new TextField();
-        scre.setPromptText("Score");
-        scre.getStyleClass().add("sc");
+        TextField Email = new TextField();
+        Email.setPromptText("email");
+        Email.getStyleClass().add("User-Textfield\"");
+
+        TextField Lv = new TextField();
+        Lv.setPromptText("LV");
+        Lv.getStyleClass().add("sc");
 
         Button btaddBT = new Button("ADD");
         btaddBT.getStyleClass().add("login-btn");
         btaddBT.setOnAction(e -> {
             addStudents(
-                Id.getText(),
                 fnameField.getText(),
                 lnameField.getText(),
-                Age.getText(),
-                scre.getText()
+                Email.getText(),
+                BD.getText()
+                
             );
             LoadData();
         });
 
-        Button DeleteBT = new Button("DELETE");
+        Button DeleteBT = new Button("DELETE(ID)");
         DeleteBT.getStyleClass().add("login-btn");
         DeleteBT.setOnAction(e -> {
             DELETEstudens(
@@ -189,11 +198,7 @@ public class Appscore extends Application {
         UPDATEBT.setOnAction(e -> {
             
             UPDATEStudents(
-                
-                fnameField.getText(),
-                lnameField.getText(),
-                Age.getText(),
-                scre.getText(),
+                Email.getText(),
                 Id.getText()
                 );
             
@@ -207,25 +212,29 @@ public class Appscore extends Application {
         idcl.setCellValueFactory(data -> data.getValue().idProperty());
 
         TableColumn<Students,String> fcl = new TableColumn<>("First Name");
-        fcl.setCellValueFactory(data -> data.getValue().fnameProperty());
+        fcl.setCellValueFactory(data -> data.getValue().f_nameProperty());
 
         TableColumn<Students,String> lcl = new TableColumn<>("Last Name");
-        lcl.setCellValueFactory(data -> data.getValue().lnameProperty());
+        lcl.setCellValueFactory(data -> data.getValue().l_nameProperty());
 
-        TableColumn<Students,String> age = new TableColumn<>("Age");
-        age.setCellValueFactory(data -> data.getValue().ageProperty());
+        TableColumn<Students,String> email = new TableColumn<>("Email");
+        email.setCellValueFactory(data -> data.getValue().emailProperty());
 
-        TableColumn<Students,String> sco = new TableColumn<>("Score");
-        sco.setCellValueFactory(data -> data.getValue().scoreProperty());
+        TableColumn<Students,String> bd = new TableColumn<>("Birthday");
+        bd.setCellValueFactory(data -> data.getValue().birthdayProperty());
+
+        TableColumn<Students,String> lv = new TableColumn<>("LV");
+        lv.setCellValueFactory(data -> data.getValue().lvProperty());
 
         //ขยายตาราง
         idcl.setPrefWidth(100);
         fcl.setPrefWidth(200);
         lcl.setPrefWidth(200);
-        age.setPrefWidth(200);
-        sco.setPrefWidth(200);
+        email.setPrefWidth(200);
+        bd.setPrefWidth(100);
+        lv.setPrefWidth(70);
 
-        table.getColumns().addAll(idcl,fcl,lcl,age,sco);
+        table.getColumns().addAll(idcl,fcl,lcl,email,bd,lv);
 
         //โหลดข้อมูล
         LoadData();
@@ -248,18 +257,24 @@ public class Appscore extends Application {
         tb.setAlignment(Pos.CENTER);
         tb.setFillWidth(false);
 
+        VBox Em = new VBox(10);
+        Em.setPadding(new Insets(10));
+        Em.setAlignment(Pos.CENTER);
+        Em.setFillWidth(false);
+
         VBox Action = new VBox(10);
         Action.setPadding(new Insets(10));
         Action.setAlignment(Pos.CENTER);
         Action.setFillWidth(false);
 
         BTseach.getChildren().addAll(sch,btsch,res); //Nodeค้นหา
-        BT.getChildren().addAll(Id,fnameField,lnameField,Age,scre); //Node TextField
+        BT.getChildren().addAll(Id,fnameField,lnameField,Lv); //Node TextField
+        Em.getChildren().addAll(BD,Email);
 
         BTAC.getChildren().addAll(btaddBT,DeleteBT,UPDATEBT); //NodeAction
         Action.getChildren().addAll(BTAC); //จัดระเบียบ
 
-        tb.getChildren().addAll(BTseach,lb,BT,Action,table);//จัดระเบียบ
+        tb.getChildren().addAll(BTseach,lb,BT,Em,Action,table);//จัดระเบียบ
 
         Scene scene2 = new Scene(tb,1000,600);
 
@@ -272,11 +287,11 @@ public class Appscore extends Application {
     }
 
 //GUI3 ############################################################################################################################################################################
-    public void StudenScene(){
+    public void Regiter(){
 
         StackPane root = new StackPane();
 
-        Label lb = new Label("StudenScene");
+        Label lb = new Label("Regiter");
 
         root.getChildren().add(lb);
         root.getStyleClass().add("bg-scene3");
@@ -286,7 +301,7 @@ public class Appscore extends Application {
         Scene scene3 = new Scene(root,1000,600);
         scene3.getStylesheets().add(getClass().getResource("Sy.css").toExternalForm());
 
-        stage.setTitle("Studen");
+        stage.setTitle("Regiter");
         stage.setScene(scene3);
         stage.show();
     }
@@ -300,15 +315,16 @@ public void LoadData(){
 
     //loopเอาข้อมูลมาใส่เก็บไว้ใน Array
     Statement stmt = conn.createStatement();
-    ResultSet rs = stmt.executeQuery("SELECT * FROM new_table");
+    ResultSet rs = stmt.executeQuery("SELECT * FROM data_store");
 
     while(rs.next()){
         list.add(new Students(
             rs.getString("id"), //ตัวแปรในdatabase
-            rs.getString("fname"),
-            rs.getString("lname"),
-            rs.getString("age"),
-            rs.getString("score")
+            rs.getString("f_name"),
+            rs.getString("l_name"),
+            rs.getString("email"),
+            rs.getString("birthday"),
+            rs.getString("lv")
         ));
     }
 
@@ -321,19 +337,18 @@ public void LoadData(){
         }
     }
 
-    //Add ข้อมูล
-public void addStudents(String id,String fname, String lname, String age, String score){
+    //Add ข้อมูล 
+public void addStudents(String f_name, String l_name, String email, String birthday){
     try {
         Connection conn = connect();
 
-        String sql = "INSERT INTO new_table(id,fname,lname,age,score) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO data_store(f_name,l_name,email,birthday) VALUES (?,?,?,?)";
         PreparedStatement add = conn.prepareStatement(sql);
 
-        add.setString(1, id);
-        add.setString(2,fname);
-        add.setString(3,lname);
-        add.setString(4,age);
-        add.setString(5,score);
+        add.setString(1,f_name);
+        add.setString(2,l_name);
+        add.setString(3,email);
+        add.setString(4,birthday);
 
         add.executeUpdate();
 
@@ -348,7 +363,7 @@ public void DELETEstudens(String id){
     try {
         Connection conn = connect();
 
-        String sql = "DELETE FROM new_table WHERE id=?";
+        String sql = "DELETE FROM data_store WHERE id=?";
         PreparedStatement dt = conn.prepareStatement(sql);
 
         dt.setString(1, id);
@@ -362,18 +377,15 @@ public void DELETEstudens(String id){
     }
     }
     //UPDATE ข้อมูล
-    public void UPDATEStudents(String fname, String lname, String age, String score,String id){
+    public void UPDATEStudents(String email,String id){
     try {
         Connection conn = connect();
 
-        String sql = "UPDATE new_table SET fname=? ,lname=?, age=?, score=? WHERE id =?";
+        String sql = "UPDATE data_store SET email=? WHERE id =?";
         PreparedStatement add = conn.prepareStatement(sql);
-
-        add.setString(1, fname);
-        add.setString(2, lname);
-        add.setString(3, age);
-        add.setString(4, score);
-        add.setString(5, id);
+    
+        add.setString(1, email);
+        add.setString(2, id);
 
         int rows = add.executeUpdate();
         System.out.println("Updated rows = " + rows);
@@ -391,7 +403,7 @@ public void DELETEstudens(String id){
         try {
         Connection conn = connect();
 
-        String sql = "SELECT * FROM new_table WHERE id = ?";
+        String sql = "SELECT * FROM data_store WHERE id = ?";
         PreparedStatement sel = conn.prepareStatement(sql);
 
         sel.setString(1, id);
@@ -399,11 +411,12 @@ public void DELETEstudens(String id){
 
          while(rs.next()){
             list.add(new Students(
-                rs.getString("id"),
-                rs.getString("fname"),
-                rs.getString("lname"),
-                rs.getString("age"),
-                rs.getString("score")
+                rs.getString("id"), //ตัวแปรในdatabase
+                rs.getString("f_name"),
+                rs.getString("l_name"),
+                rs.getString("email"),
+                rs.getString("birthday"),
+                rs.getString("lv")
             ));
         }
 
